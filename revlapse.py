@@ -71,7 +71,7 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 
 	# GET FRAMES FROM VIDEO
 	YTFRAMESDIR = FRAMESDIR + ytfilename + "/"
-	if not os.path.exists(YTFRAMESDIR)
+	if not os.path.exists(YTFRAMESDIR):
 		os.makedirs(YTFRAMESDIR)
 
 	ffmpegCallPrev = ["ffmpeg", "-i", VIDEODIR + ytfilename, "-r", FPS] 
@@ -86,8 +86,8 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 
 	# GET GRIS FRAMES
 	
-	YTGRISFRAMESDIR = GRISFRAMESDIR + ytfilename + "/"
-	if not os.path.exists(YTGRISFRAMESDIR)
+	YTGRISFRAMESDIR = GRISDIR + ytfilename + "/"
+	if not os.path.exists(YTGRISFRAMESDIR):
 		os.makedirs(YTGRISFRAMESDIR)
 
 	frameFiles = getFrameFiles(ytfilename)
