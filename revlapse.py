@@ -1,6 +1,14 @@
+#!/usr/bin/python
+
 from subprocess import call
 import youtube_dl
+import urlparse
 import os
+from os import listdir
+from os.path import isfile, join
+from fnmatch import fnmatch
+import urllib
+import googleGris
 
 class MyLogger(object):
 	def debug(self, msg):
@@ -22,6 +30,7 @@ def my_hook(d):
 
 VIDEODIR = 'videos/raws/'
 FRAMESDIR = 'videos/frames/'
+GRISDIR = 'videos/grisframes/'
 
 ydl_opts = {
 	'outtmpl': VIDEODIR + '%(id)s.%(ext)s',
@@ -36,7 +45,27 @@ ytfilename = None
 VIDEO_URL = 'http://www.youtube.com/watch?v=BaW_jenozKc'
 FPS = "0.1"
 
+
+def getFrameFiles(ytfilename):
+	frameFiles = [ f for f in listdir(FRAMESDIR) if isfile(join(FRAMESDIR,f)) and fnmatch(f, ytfilename +'_*')]
+	return frameFiles
+
+
+
+
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 	ydl.download([VIDEO_URL])
-	print ytfilename
-	call(["ffmpeg", "-i", VIDEODIR + ytfilename, "-r", FPS, FRAMESDIR + ytfilename + "_frame_%3d.jpg"])
+#	call(["ffmpeg", "-i", VIDEODIR + ytfilename, "-r", FPS, FRAMESDIR + ytfilename + "_frame_%3d.jpg"])
+	frameFiles = getFrameFiles(ytfilename)
+	print "\n\n======"
+	print "Frames obtained: doing Reverse Image Search and downloading"
+	# this is not a map because getGrisImage takes a loooong time
+	RisFiles = []
+	for i, frame in enumerate(frameFiles):
+		print "=== FRAME: ", frame
+		fGris = googleGris.getGrisImage(frame)
+		print "=== GRISFRAME: ", fGris
+		RisFiles.append({ "index" : i, "framename" : frame, "frameGrisname" : fGris})
+		urllib.urlretrieve(fGris, GRISDIR + frame)
+		print "=== GRISFRAME DOWNLOADED"
+
