@@ -14,7 +14,7 @@ def blockspringGris(image_url):
 
 def getGrisImage(image_url, pickRandom=True, imageOnly=True, minArea=0):
 	similars = blockspringGris(image_url)[u'visually_similar_images']
-        print similars
+       # print similars
 	if(len(similars) == 0):
 		return "-1"
 
