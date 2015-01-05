@@ -1,0 +1,33 @@
+/* @override 
+	http://vps.provolot.com/GITHUB/revlapse/videos/style.css */
+
+body {
+	/*width:  50%;*/
+	/*background-color: blue;*/
+}
+
+td {
+	border: 1px solid red !important;
+}
+
+tr{
+	/*width: 50%;*/
+}
+img {
+	height: 400px;
+	max-width: 100%;
+}
+.orig img {
+	/*max-height: 400px;*/
+	/*max-width: 50%;*/
+}
+
+.gris img {
+	text-align: center;
+	display: block;
+	margin: auto;
+	width: 700px;
+	
+	/*max-height: 400px;*/
+	/*max-width: 100%;*/
+}
