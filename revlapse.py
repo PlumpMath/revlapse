@@ -64,8 +64,11 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 	for i, frame in enumerate(frameFiles):
 		print "=== FRAME: ", frame
 		fGris = googleGris.getGrisImage(frame)
-		print "=== GRISFRAME: ", fGris
-		RisFiles.append({ "index" : i, "framename" : frame, "frameGrisname" : fGris})
-		urllib.urlretrieve(fGris, GRISDIR + frame)
-		print "=== GRISFRAME DOWNLOADED"
+		if(fGris):
+			print "=== GRISFRAME: ", fGris
+			RisFiles.append({ "index" : i, "framename" : frame, "frameGrisname" : fGris})
+			urllib.urlretrieve(fGris, GRISDIR + frame)
+			print "=== GRISFRAME DOWNLOADED"
+		else:
+			print "=== GRISFRAME NONEXISTENT"
 

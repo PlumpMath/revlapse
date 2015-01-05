@@ -12,6 +12,8 @@ def blockspringGris(image_url):
 
 def getGrisImage(image_url, pickRandom=True):
 	similars = blockspringGris(image_url)[u'visually_similar_images']
+	if(len(similars) == 0):
+		return None
 	if(pickRandom):
 		imgpick = random.choice(similars)
 	else:
