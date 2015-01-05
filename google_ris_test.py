@@ -1,36 +1,23 @@
 import json
+import urllib2
 import requests
-from bs4 import BeautifulSoup
-import json
+import random
 
-def ris(image_url):
-    headers = {}
-    headers['User-Agent'] = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17"
-    r = requests.get('http://www.google.com/searchbyimage?image_url=' + image_url, headers=headers)
+def blockspringGRIS(image_url):
+	req = urllib2.Request("https://sender.blockspring.com/api_v2/blocks/4521f0eb2b5658d71ab4cf25a7af0a0c?api_key=947b009aeaa33b92c20db3012884c3de")
+	req.add_header('Content-Type', 'application/json')
+	data = {"image_url": image_url}
+	results = urllib2.urlopen(req, json.dumps(data)).read()
+	return json.loads(results)
 
-    html = r.text
-
-    print html
-
-    soup = BeautifulSoup(html)
-
-    print soup
-
-    text = soup.find("a", class_="_gUb")
-
-    if text:
-        text = text.find(text=True)
-
-    matches = soup.find_all("h3", class_="r")
-
-    if (matches):
-        output_matches = []
-        for match in matches:
-            output_matches.append(match.find(href=True)['href'])
-        matches = output_matches
-
-    print text
-    print matches
+def getImage(image_url, pickRandom=True):
+	similars = blockspringGRIS(image_url)[u'visually_similar_images']
+	print similars
+	if(pickRandom):
+		imgpick = random.choice(similars)
+	else:
+		imgpick = similars[0]
+	return imgpick[u'ou']
 
 
-print ris("http://vps.provolot.com/GITHUB/revlapse/imgs/example1.jpg");
+getImage("http://vps.provolot.com/GITHUB/revlapse/imgs/example1.jpg")
