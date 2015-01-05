@@ -32,8 +32,8 @@ ydl_opts = {
 global ytfilename
 ytfilename = None
 
-
-VIDEO_URL = "https://www.youtube.com/watch?v=KJKC3cwv5b0"
+#VIDEO_URL = "https://www.youtube.com/watch?v=KJKC3cwv5b0"
+VIDEO_URL = 'http://www.youtube.com/watch?v=BaW_jenozKc'
 FPS = "0.1"
 
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
